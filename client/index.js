@@ -1,28 +1,16 @@
-import {Client} from './jql/index.js';
+const execute = require("./jql/index");
+const { funcA } = require("./public-api");
 
 (async function() {
-    const client = new Client();
-    try {
-        const response = await client.query(async (rpc) => {
-            console.log('Client printing bla');
-            const result = rpc.call('bla');
-            try {
-                process.exit();
-            } catch (ex) {
-                console.log('Failed process.exit();', ex);
-            }
+  try {
+    const newFunc = execute(a => {
+      funcA(a);
+    });
 
-            try {
-                require('fs').readFileSync('/etc/passwd');
-            } catch (ex) {
-                console.log('Failed reading fs', ex);
-            }
+    newFunc(3);
 
-            return result;
-        })
-
-        console.log('Got response', response);
-    } catch(ex) {
-        console.log('Failed to get response', ex);
-    }
+    console.log("Got response", response);
+  } catch (ex) {
+    console.log("Failed to get response", ex);
+  }
 })();
