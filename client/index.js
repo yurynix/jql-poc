@@ -4,10 +4,10 @@ const { funcA } = require("./public-api");
 (async function() {
   try {
     const newFunc = execute(a => {
-      funcA(a);
+      return funcA(a);
     });
 
-    newFunc(3);
+    const response = await newFunc(3);
 
     console.log("Got response", response);
   } catch (ex) {

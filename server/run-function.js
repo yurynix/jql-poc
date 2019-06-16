@@ -1,7 +1,6 @@
 const { VM } = require("vm2");
 const fetch = require("node-fetch");
 module.exports = async function runFunction(functionString, args) {
-  console.log("EXECUTE", functionString, args);
   const vm = new VM({
     timeout: 3 * 1000,
     require: {
@@ -21,12 +20,16 @@ module.exports = async function runFunction(functionString, args) {
   const func = ${functionString};
   func(...[${args}]);
    `;
+  try {
+    const sandboxedFunction = vm.run(functionString);
 
-  console.log(code);
-  const sandboxedFunction = vm.run(code);
+    console.log(sandboxedFunction);
 
-  const result = await sandboxedFunction(rpc);
-  console.log("func result", typeof result, result);
+    const result = await sandboxedFunction(...args);
+    console.log("func result", typeof result, result);
 
-  return result;
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
 };

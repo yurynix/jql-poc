@@ -1,5 +1,6 @@
-const funcA = function() {
-  console.log("boris was here");
+const funcA = function(arg) {
+  console.log("boris was here" + arg);
+  return "boris was here" + arg;
 };
 
 const funcB = function() {
